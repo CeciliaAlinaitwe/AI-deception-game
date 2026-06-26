@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brain Hack</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 80%;
+            margin: auto;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .score {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .counter {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: gray;
+        }
+
+        img {
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .display-img {
+            width: 700px;
+            max-width: 95%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            display: block;
+            margin: 20px auto;
+        }
+
+        p {
+            font-size: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Brain Hack</h1>
+
+    <div class="score">
+        Score: {{ score }}
+    </div>
+
+    <div class="counter">
+        Question {{ current }} / {{ total }}
+    </div>
+
+    <!-- QUESTION DISPLAY -->
+    {% if question.type == "image" %}
+        <img class="display-img"
+             src="{{ url_for('static', filename=question.content) }}"
+             alt="quiz image">
+    {% else %}
+        <p><b>{{ question.content }}</b></p>
+    {% endif %}
+
+    <!-- ANSWER BUTTONS -->
+    <form method="POST" action="/answer">
+
+        {% for option in question.options %}
+            <button name="answer" value="{{ option }}">
+                {{ option }}
+            </button>
+        {% endfor %}
+
+    </form>
+
+</div>
+
+</body>
+</html>
